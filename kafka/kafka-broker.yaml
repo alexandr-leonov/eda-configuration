@@ -9,8 +9,6 @@ spec:
   ports:
   - port: 9092
     name: plaintext
-  - port: 9999
-    name: jmx
   clusterIP: None
   selector:
     app: kafka
@@ -41,8 +39,6 @@ spec:
         ports:
         - containerPort: 9092
           name: plaintext
-        - containerPort: 9999
-          name: jmx
         env:
           - name: KAFKA_ADVERTISED_PORT
             value: "9092"
@@ -52,7 +48,3 @@ spec:
             value: "zookeeper-service:2181"
           - name: KAFKA_LISTENERS
             value: "PLAINTEXT://:9092"
-          - name: KAFKA_JMX_OPTS
-            value: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.rmi.port=9999 -Djava.rmi.server.hostname=127.0.0.1"
-          - name: JMX_PORT
-            value: "9999"

@@ -4,3 +4,16 @@ metadata:
   name: "postgres-cluster"
   labels:
     name: "postgres-cluster"
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-credentials
+  namespace: postgres-cluster
+type: Opaque
+data:
+  POSTGRES_USER: ZWRhLWRlbW8tbG9naW4=
+  POSTGRES_PASSWORD: ZWRhLWRlbW8tcGFzc3dvcmQ=
+  POSTGRES_DB: ZWRhLWRlbW8tZGI=
