@@ -1,6 +1,6 @@
 ###K8s configuration for all components of Event Driven Architecture (EDA) pet project.
 
-![Project schema](Schema.drawio)
+![](.docs/Schema.png)
 
 
 Links to materials:
