@@ -1,8 +1,7 @@
-# eda-configuration
+###K8s configuration for all components of Event Driven Architecture (EDA) pet project.
 
-**Configuration of EDA project (LB, Deploy, ...)**
+![Project schema](Schema.drawio)
 
-*K8s configuration for all components of Event Driven Architecture (EDA) project.*
 
 Links to materials:
 - https://github.com/d1egoaz/minikube-kafka-cluster
@@ -61,3 +60,11 @@ Show topics:
 > kubectl -n "kafka-cluster" exec -it kafka-0 bash
 > kafka-topics.sh --list --zookeeper zookeeper-service.kafka-cluster.svc.cluster.local:2181
 ```
+
+Show all messages from topic:
+```
+> kubectl -n "kafka-cluster" exec -it kafka-0 bash
+> kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic "order-topic" --from-beginning
+```
+
+
