@@ -61,3 +61,11 @@ Show topics:
 > kubectl -n "kafka-cluster" exec -it kafka-0 bash
 > kafka-topics.sh --list --zookeeper zookeeper-service.kafka-cluster.svc.cluster.local:2181
 ```
+
+Show all messages from topic:
+```
+> kubectl -n "kafka-cluster" exec -it kafka-0 bash
+> kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic "order-topic" --from-beginning
+```
+
+
