@@ -59,7 +59,7 @@ Example:
 Show topics:
 ```
 > kubectl -n "kafka-cluster" exec -it kafka-0 bash
-> kafka-topics.sh --list --zookeeper zookeeper-service.kafka-cluster.svc.cluster.local:2181
+> kafka-topics.sh --list --bootstrap-server localhost:9092
 ```
 
 Show all messages from topic:
