@@ -5,6 +5,7 @@
 
 Links to materials:
 - https://github.com/d1egoaz/minikube-kafka-cluster
+- https://github.com/scriptcamp/kubernetes-jenkins
 
 <br/>
 <br/>
