@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: postgres-service
-  namespace: postgres-cluster
+  namespace: eda-dev
   labels:
     app: postgres-service
 spec:
@@ -13,6 +13,7 @@ spec:
       port: 5432
       protocol: TCP
       targetPort: 5432
+      nodePort: 30003
   type: NodePort
 
 ---
@@ -21,7 +22,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgres-deployment
-  namespace: postgres-cluster
+  namespace: eda-dev
   labels:
     app: postgres-deployment
 spec:

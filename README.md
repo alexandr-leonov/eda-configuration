@@ -2,10 +2,39 @@
 
 ![](docs/Schema.png)
 
+Order service: https://github.com/alexandr-leonov/eda-order-service
 
-Links to materials:
-- https://github.com/d1egoaz/minikube-kafka-cluster
-- https://github.com/scriptcamp/kubernetes-jenkins
+<br>
+<br>
+
+## Install infrastructure
+
+```
+# Set up 1 node k8s
+
+> minikube start --memory=6000
+
+# Go to environment folder
+
+> cd dev
+
+# install evnironment settings
+
+> kubectl apply -f namespace.yaml
+> kubectl apply -f secret.yaml
+
+# install components
+
+> kubectl apply -f postgres/postgres-cluster.yaml
+> kubectl apply -f kafka/zookeeper-cluster.yaml
+> kubectl apply -f kafka/kafka-borker.yaml
+
+# install services
+
+> kubectl apply -f services/order-service.yaml
+
+```
+
 
 <br/>
 <br/>
@@ -69,3 +98,7 @@ Show all messages from topic:
 ```
 
 
+## Links to materials:
+- https://github.com/d1egoaz/minikube-kafka-cluster
+- https://github.com/scriptcamp/kubernetes-jenkins
+- https://kubernetes.io/docs/concepts/services-networking/service/#environment-variables
