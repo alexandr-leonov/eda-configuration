@@ -2,6 +2,9 @@
 
 ![](docs/Schema.png)
 
+
+## Components repositories:
+
 Order service: https://github.com/alexandr-leonov/eda-order-service
 
 <br>
@@ -30,8 +33,13 @@ Order service: https://github.com/alexandr-leonov/eda-order-service
 > kubectl apply -f kafka/kafka-borker.yaml
 
 # install services
+# (each service has CI config based on GitHub actions)
 
 > kubectl apply -f services/order-service.yaml
+
+# Create automate CD process with 4h refresh images policy
+> kubectl apply -f system/rights.yaml
+> kubectl apply -f system/scheduler.yaml
 
 ```
 
@@ -102,3 +110,5 @@ Show all messages from topic:
 - https://github.com/d1egoaz/minikube-kafka-cluster
 - https://github.com/scriptcamp/kubernetes-jenkins
 - https://kubernetes.io/docs/concepts/services-networking/service/#environment-variables
+- https://stackoverflow.com/questions/52422300/how-to-schedule-pods-restart
+- https://habr.com/ru/company/southbridge/blog/526130/

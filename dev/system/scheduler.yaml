@@ -1,0 +1,26 @@
+# Docker image update tracking.
+# By default K8s config has limit on 3 success job and 1 failed.
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: deployment-restart
+  namespace: eda-dev
+spec:
+  concurrencyPolicy: Forbid
+  schedule: '* */4 * * *' # every 4 hours create CD
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      activeDeadlineSeconds: 100
+      template:
+        spec:
+          serviceAccountName: deployment-restart
+          restartPolicy: Never
+          containers:
+            - name: kubectl
+              image: bitnami/kubectl
+              command:
+                - 'kubectl'
+                - 'rollout'
+                - 'restart'
+                - 'deployment/order-service-deployment'
