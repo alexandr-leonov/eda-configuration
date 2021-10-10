@@ -38,7 +38,7 @@ spec:
     spec:
       containers:
         - name: order-service-container
-          image: aleson/order-service:latest
+          image: ${{ secrets.DOCKER_HUB_LOGIN }}/order-service:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8083
