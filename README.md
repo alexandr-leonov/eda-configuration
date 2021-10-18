@@ -15,7 +15,7 @@ Order service: https://github.com/alexandr-leonov/eda-order-service
 ```
 # Set up 1 node k8s
 
-> minikube start --memory=6000
+> minikube start --memory=6144
 
 # Go to environment folder
 
@@ -81,7 +81,7 @@ Example:
 <br/>
 <br/>
 
-
+# Work with Kafka
 Create topics:
 ```
 1) kubectl -n (namespace) exec -it (pod) bash
@@ -105,6 +105,15 @@ Show all messages from topic:
 > kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic "order-topic" --from-beginning
 ```
 
+# Work with Prometheus
+```
+# Install:
+> kubectl apply -f monitoring/rights.yaml
+> kubectl apply -f monitoring/config-map.yaml
+> kubectl apply -f monitoring/prometheus-deployment.yaml
+> kubectl apply -f monitoring/prometheus-service.yaml
+```
+
 
 ## Links to materials:
 - https://github.com/d1egoaz/minikube-kafka-cluster
@@ -112,3 +121,5 @@ Show all messages from topic:
 - https://kubernetes.io/docs/concepts/services-networking/service/#environment-variables
 - https://stackoverflow.com/questions/52422300/how-to-schedule-pods-restart
 - https://habr.com/ru/company/southbridge/blog/526130/
+- https://devopscube.com/setup-prometheus-monitoring-on-kubernetes/
+- https://devopscube.com/setup-grafana-kubernetes/
