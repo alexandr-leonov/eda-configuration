@@ -1,6 +1,6 @@
 ### K8s configuration for all components of Event Driven Architecture (EDA) pet project.
 
-![](docs/Schema.png)
+![](docs/all-schema.png)
 
 
 ## Components repositories:
