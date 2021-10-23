@@ -1,0 +1,15 @@
+spec:
+  ports:
+  - port: 3000
+    targetPort: 3000
+    nodePort: 30000
+
+
+sidecar:
+  image: 
+    repository: quay.io/kiwigrid/k8s-sidecar
+    tag: 1.12.3
+  imagePullPolicy: IfNotPresent
+  datasources:
+    enabled: true
+    label: grafana_datasource

@@ -1,0 +1,5 @@
+- job_name: prometheus-spring
+  metrics_path: '/actuator/prometheus'
+  scrape_interval: 5s
+  static_configs:
+    - targets: ['192.168.99.100:30004']

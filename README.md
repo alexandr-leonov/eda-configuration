@@ -89,37 +89,54 @@ Create topics:
 
 Example:
 
-> kubectl -n "kafka-cluster" exec -it kafka-0 bash
-> kafka-topics.sh --create --zookeeper zookeeper-service.kafka-cluster.svc.cluster.local:2181  --replication-factor 1 --partitions 1 --topic "order-topic"
+> kubectl -n "eda-dev" exec -it kafka-0 bash
+> kafka-topics.sh --create --zookeeper zookeeper-service.eda-dev.svc.cluster.local:2181  --replication-factor 1 --partitions 1 --topic "order-topic"
 ```
 
 Show topics:
 ```
-> kubectl -n "kafka-cluster" exec -it kafka-0 bash
+> kubectl -n "eda-dev" exec -it kafka-0 bash
 > kafka-topics.sh --list --bootstrap-server localhost:9092
 ```
 
 Show all messages from topic:
 ```
-> kubectl -n "kafka-cluster" exec -it kafka-0 bash
+> kubectl -n "eda-dev" exec -it kafka-0 bash
 > kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic "order-topic" --from-beginning
 ```
 
-# Work with Prometheus
+# Add Prometheus + Graphana
 ```
 # Install:
-> kubectl apply -f monitoring/rights.yaml
-> kubectl apply -f monitoring/config-map.yaml
-> kubectl apply -f monitoring/prometheus-deployment.yaml
-> kubectl apply -f monitoring/prometheus-service.yaml
+> kubectl apply -f monitoring/namespace.yaml
+> helm upgrade --install prometheus --set-file extraScrapeConfigs=monitoring/prometheus/values.yaml stable/prometheus --namespace monitoring
+> kubectl apply -f monitoring/config.yaml
+> helm install grafana stable/grafana -f monitoring/values.yaml --namespace monitoring
+
+# View Graphana generated password
+> kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+
+# Open random graphana port (because need to implement ingress)
+> kubectl expose pod grafana-58f6744674-sfbcz --type=NodePort
+
+# View prometheus config
+> kubectl -n monitoring exec -it prometheus-server-7bc886d65-7kvqf  -c prometheus-server cat /etc/config/prometheus.yml
+
 ```
+
+Then create simple test dashboard for Order Service as example:
+
+![](docs/Graphana-test-dashboard.png)
 
 
 ## Links to materials:
-- https://github.com/d1egoaz/minikube-kafka-cluster
+- https://github.com/d1egoaz/minikube-eda-dev
 - https://github.com/scriptcamp/kubernetes-jenkins
 - https://kubernetes.io/docs/concepts/services-networking/service/#environment-variables
 - https://stackoverflow.com/questions/52422300/how-to-schedule-pods-restart
 - https://habr.com/ru/company/southbridge/blog/526130/
-- https://devopscube.com/setup-prometheus-monitoring-on-kubernetes/
-- https://devopscube.com/setup-grafana-kubernetes/
+- https://nirajsonawane.github.io/2020/05/17/Monitoring-Spring-Boot-Application-with-Prometheus-and-Grafana-on-Kubernetes/
+- https://github.com/grafana/helm-charts/tree/main/charts/grafana
+- https://habr.com/ru/company/agima/blog/524654/
+- https://stackoverflow.com/questions/55360726/how-to-add-extrascrapeconfigs-to-prometheus-helm-chart-from-set-argument
+- https://www.programmingwithwolfgang.com/create-grafana-dashboards-with-prometheus-metrics/
