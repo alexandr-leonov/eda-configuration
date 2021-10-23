@@ -29,8 +29,12 @@ Order service: https://github.com/alexandr-leonov/eda-order-service
 # install components
 
 > kubectl apply -f postgres/postgres-cluster.yaml
+
 > kubectl apply -f kafka/zookeeper-cluster.yaml
 > kubectl apply -f kafka/kafka-borker.yaml
+
+> helm repo add bitnami https://charts.bitnami.com/bitnami
+> helm install mongo-cluster -f mongodb/values.yaml bitnami/mongodb --namespace eda-dev
 
 # install services
 # (each service has CI config based on GitHub actions)
@@ -140,3 +144,4 @@ Then create simple test dashboard for Order Service as example:
 - https://habr.com/ru/company/agima/blog/524654/
 - https://stackoverflow.com/questions/55360726/how-to-add-extrascrapeconfigs-to-prometheus-helm-chart-from-set-argument
 - https://www.programmingwithwolfgang.com/create-grafana-dashboards-with-prometheus-metrics/
+- https://github.com/bitnami/charts/tree/master/bitnami/mongodb
