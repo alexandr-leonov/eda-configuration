@@ -141,7 +141,7 @@ Then create simple test dashboard for Order Service as example:
 > kubectl get ingress
 > kubectl describe ingress eda-proxy-host
 
-# Open random graphana port (because need to implement ingress)
+# Open random grafana port (because need to implement ingress)
 > kubectl expose pod grafana-58f6744674-sfbcz --type=NodePort
 > kubectl apply -f proxy/ingress-monitoring.yaml
 # http://eda-project.leonov.ru:31901/
