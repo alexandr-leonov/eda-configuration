@@ -126,11 +126,6 @@ Show all messages from topic:
 > kubectl -n monitoring exec -it prometheus-server-7bc886d65-7kvqf  -c prometheus-server cat /etc/config/prometheus.yml
 
 ```
-
-Then create simple test dashboard for Order Service as example:
-
-![](docs/Grafana-test-dashboard.png)
-
 ## Install Ingress
 
 ```
