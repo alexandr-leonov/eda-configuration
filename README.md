@@ -36,6 +36,8 @@ Order service: https://github.com/alexandr-leonov/eda-order-service
 > helm repo add bitnami https://charts.bitnami.com/bitnami
 > helm install mongo-cluster -f mongodb/values.yaml bitnami/mongodb --namespace eda-dev
 
+> helm install redis-cluster bitnami/redis --namespace eda-dev
+
 # install services
 # (each service has CI config based on GitHub actions)
 
@@ -109,7 +111,7 @@ Show all messages from topic:
 > kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic "order-topic" --from-beginning
 ```
 
-# Add Prometheus + Graphana
+# Add Prometheus + Grafana
 ```
 # Install:
 > kubectl apply -f monitoring/namespace.yaml
@@ -117,11 +119,8 @@ Show all messages from topic:
 > kubectl apply -f monitoring/config.yaml
 > helm install grafana stable/grafana -f monitoring/values.yaml --namespace monitoring
 
-# View Graphana generated password
+# View Grafana generated password
 > kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
-
-# Open random graphana port (because need to implement ingress)
-> kubectl expose pod grafana-58f6744674-sfbcz --type=NodePort
 
 # View prometheus config
 > kubectl -n monitoring exec -it prometheus-server-7bc886d65-7kvqf  -c prometheus-server cat /etc/config/prometheus.yml
@@ -130,8 +129,27 @@ Show all messages from topic:
 
 Then create simple test dashboard for Order Service as example:
 
-![](docs/Graphana-test-dashboard.png)
+![](docs/Grafana-test-dashboard.png)
 
+## Install Ingress
+
+```
+> minikube addons enable ingress
+> kubectl apply -f proxy/ingress-dev.yaml
+# http://eda-project.leonov.ru:30004/
+
+> kubectl get ingress
+> kubectl describe ingress eda-proxy-host
+
+# Open random graphana port (because need to implement ingress)
+> kubectl expose pod grafana-58f6744674-sfbcz --type=NodePort
+> kubectl apply -f proxy/ingress-monitoring.yaml
+# http://eda-project.leonov.ru:31901/
+
+# For get url to service
+> minikube service order-service -n eda-dev --url
+
+```
 
 ## Links to materials:
 - https://github.com/d1egoaz/minikube-eda-dev
@@ -145,3 +163,6 @@ Then create simple test dashboard for Order Service as example:
 - https://stackoverflow.com/questions/55360726/how-to-add-extrascrapeconfigs-to-prometheus-helm-chart-from-set-argument
 - https://www.programmingwithwolfgang.com/create-grafana-dashboards-with-prometheus-metrics/
 - https://github.com/bitnami/charts/tree/master/bitnami/mongodb
+- https://github.com/bitnami/charts/tree/master/bitnami/redis
+- https://kubernetes.io/docs/concepts/services-networking/ingress
+- https://stackoverflow.com/questions/59844622/ingress-configuration-for-k8s-in-different-namespaces

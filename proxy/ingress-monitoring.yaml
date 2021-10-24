@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: monitoring
+  name: monitoring-proxy-host
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+    # Before apply configuration Need add to /etc/hosts $(minikube ip) eda-project.leonov.ru!
+  - host: eda-project.leonov.ru
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: grafana-58f6744674-sfbcz
+            port:
+              number: 80
