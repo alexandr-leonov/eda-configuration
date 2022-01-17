@@ -31,8 +31,9 @@ Order service: https://github.com/alexandr-leonov/eda-order-service
 > kubectl apply -f postgres/postgres-cluster.yaml
 
 > kubectl apply -f kafka/zookeeper-cluster.yaml
-> kubectl apply -f kafka/kafka-borker.yaml
+> kubectl apply -f kafka/kafka-broker.yaml
 
+> snap install helm
 > helm repo add bitnami https://charts.bitnami.com/bitnami
 > helm install mongo-cluster -f mongodb/values.yaml bitnami/mongodb --namespace eda-dev
 
